@@ -1,7 +1,8 @@
 var GameLayer = cc.LayerColor.extend({
   init: function() {
-    this._super( new cc.Color( 127, 127, 127, 255 ) );
-    this.setPosition( new cc.Point( 0, 0 ) );
+   	this.background = new Bg();
+	this.addChild(this.background);
+	this.background.setPosition(new cc.Point(400,300));
 	this.player= new Cannon();
 	this.player.setPosition(new cc.Point(100,100));
 	this.addChild(this.player);

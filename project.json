@@ -15,6 +15,7 @@
         "src/resource.js",
         "src/GameLayer.js",
 		"src/Cannon.js",
-		"src/Enemy.js"
+		"src/Enemy.js",
+		"src/Bg.js"
     ]
 }
