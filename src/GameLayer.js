@@ -7,15 +7,16 @@ var GameLayer = cc.LayerColor.extend({
 	this.player= new Player();
 	this.player.setPosition(new cc.Point(400,300));
 	this.addChild(this.player);
-	this.enemy = new Enemy();
-	this.enemy.setPosition(new cc.Point(0, 300));
-	this.addChild(this.enemy);
     this.addKeyboardHandlers();
 	this.scheduleUpdate();
+	this.createEnemy();
+	  
     return true;
   },
 	update: function(){
-	this.player.scheduleUpdate();
+		
+		var pos = this.player.getPosition();
+		this.player.scheduleUpdate();
 		
 	},
     addKeyboardHandlers: function() {
@@ -30,17 +31,53 @@ var GameLayer = cc.LayerColor.extend({
             }
         }, this);
     },
-    
+
 	onKeyDown: function( keyCode, event ) {
-		if( keyCode == cc.KEY.right){
-			this.player.moveRight();
+		if( keyCode == cc.KEY.d){
+			this.player.switchDirection(4);
+		}else if( keyCode == cc.KEY.a){
+			this.player.switchDirection(3);
+		}else if( keyCode == cc.KEY.w){
+			this.player.switchDirection(1);
+    	}else if(keyCode == cc.KEY.s){
+      		this.player.switchDirection(2);
+		}else if( keyCode == cc.KEY.up){
+			this.fire(1);
+		}else if( keyCode == cc.KEY.down){
+			this.fire(2);
 		}else if( keyCode == cc.KEY.left){
-			this.player.moveLeft();
+			this.fire(3);
+		}else if( keyCode == cc.KEY.right){
+			this.fire(4);
 		}
     },
     onKeyUp: function( keyCode, event ) {
-		console.log('Up: ' + keyCode.toString());
-    }
+      if( keyCode == cc.KEY.d){
+		  this.player.switchDirectionRelease(4);
+      }else if (keyCode == cc.KEY.a) {
+          this.player.switchDirectionRelease(3);
+      }else if(keyCode == cc.KEY.w){
+          this.player.switchDirectionRelease(1);
+      }else if(keyCode == cc.KEY.s){
+          this.player.switchDirectionRelease(2);
+      }
+    },
+	
+	createEnemy : function(){
+		//this.enemy = new Array();
+		this.enemy = new Enemy(this);
+		this.enemy.setPosition(new cc.Point(0,300));
+		this.enemy.runAction(this.enemy.moveAction);
+		this.addChild(this.enemy);
+		this.enemy.scheduleUpdate();
+	},
+	fire : function(direction){
+		this.bullet = new Bullet(this,direction);
+		this.addChild(this.bullet);
+		this.bullet.scheduleUpdate();
+		
+	},
+
 });
 
 var StartScene = cc.Scene.extend({

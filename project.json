@@ -16,6 +16,7 @@
         "src/GameLayer.js",
 		"src/Player.js",
 		"src/Enemy.js",
-		"src/Bg.js"
+		"src/Bg.js",
+		"src/Bullet.js"
     ]
 }
