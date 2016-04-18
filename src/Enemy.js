@@ -53,6 +53,10 @@ var Enemy = cc.Sprite.extend({
 		var myPos = this.getPosition();
 		if(( Math.abs(myPos.x - pPos.x) <= 30 ) && (Math.abs(myPos.y - pPos.y) <= 20 ))
 			this.gameLayer.isOver = true ;
+	},
+	die: function(){
+		this.gameLayer.enemy.unscheduleUpdate();
+		this.gameLayer.removeChild(this);
 	}
 	
 });

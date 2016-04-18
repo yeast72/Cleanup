@@ -18,7 +18,10 @@ var Bullet = cc.Sprite.extend({
 		}else if(this.direction == Bullet.Dir.RIGHT){
 			this.fireRight();
 		}
+		var ePos = this.gameLayer.enemy.getPosition();
+		this.closeToEnemy(ePos);
 		this.outOfFrame();
+		
 		
 	},
 	fireRight: function(){
@@ -47,7 +50,14 @@ var Bullet = cc.Sprite.extend({
 			this.removeBullet();
 		if(pos.y < 50 || pos.y > screenHeight - 50)
 			this.removeBullet();
-	}
+	},
+	closeToEnemy: function(ePos){
+		var myPos = this.getPosition();
+		if((Math.abs(myPos.x - ePos.x) <= 30) && (Math.abs(myPos.y - ePos.y) <= 20)){
+			this.gameLayer.enemy.die();
+			this.removeBullet();
+		}
+	},
 	
 });
 
