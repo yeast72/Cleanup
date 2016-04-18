@@ -18,8 +18,10 @@ var Bullet = cc.Sprite.extend({
 		}else if(this.direction == Bullet.Dir.RIGHT){
 			this.fireRight();
 		}
-		var ePos = this.gameLayer.enemy.getPosition();
-		this.closeToEnemy(ePos);
+		if(!this.gameLayer.enemy.dead){
+			var ePos = this.gameLayer.enemy.getPosition();
+			this.closeToEnemy(ePos);
+		}
 		this.outOfFrame();
 		
 		

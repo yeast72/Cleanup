@@ -5,6 +5,7 @@ var Enemy = cc.Sprite.extend({
 		this.gameLayer = game;
 		this.player = this.gameLayer.player;
 		this.moveAction = this.createAnimationAction1();
+		this.dead = false;
 	},
 	update: function(dt) {
 		var pPos = this.player.getPosition();
@@ -57,6 +58,7 @@ var Enemy = cc.Sprite.extend({
 	die: function(){
 		this.gameLayer.enemy.unscheduleUpdate();
 		this.gameLayer.removeChild(this);
+		this.dead = true;
 	}
 	
 });
