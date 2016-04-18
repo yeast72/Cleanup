@@ -10,13 +10,15 @@ var GameLayer = cc.LayerColor.extend({
     this.addKeyboardHandlers();
 	this.scheduleUpdate();
 	this.createEnemy();
-	  
+	this.canfire = true;
+	this.isOver = false;
     return true;
   },
 	update: function(){
-		
-		var pos = this.player.getPosition();
-		this.player.scheduleUpdate();
+		if(!this.isOver){
+			var pos = this.player.getPosition();
+			this.player.scheduleUpdate();
+		}
 		
 	},
     addKeyboardHandlers: function() {
@@ -42,13 +44,13 @@ var GameLayer = cc.LayerColor.extend({
     	}else if(keyCode == cc.KEY.s){
       		this.player.switchDirection(2);
 		}else if( keyCode == cc.KEY.up){
-			this.fire(1);
+				this.fire(1);
 		}else if( keyCode == cc.KEY.down){
-			this.fire(2);
+				this.fire(2);
 		}else if( keyCode == cc.KEY.left){
-			this.fire(3);
+				this.fire(3);
 		}else if( keyCode == cc.KEY.right){
-			this.fire(4);
+				this.fire(4);
 		}
     },
     onKeyUp: function( keyCode, event ) {
@@ -72,11 +74,16 @@ var GameLayer = cc.LayerColor.extend({
 		this.enemy.scheduleUpdate();
 	},
 	fire : function(direction){
-		this.bullet = new Bullet(this,direction);
-		this.addChild(this.bullet);
-		this.bullet.scheduleUpdate();
+		if(this.canfire){
+			this.bullet = new Bullet(this,direction);
+			this.addChild(this.bullet);
+			this.bullet.scheduleUpdate();
+		}
 		
-	},
+	},canFireBullet : function(){
+		this.canfire = true;
+		console.log(this.canfire);
+	}
 
 });
 

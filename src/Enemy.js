@@ -9,6 +9,12 @@ var Enemy = cc.Sprite.extend({
 	update: function(dt) {
 		var pPos = this.player.getPosition();
 		this.directionToPlayer(pPos);
+		this.closeTo(pPos);
+		if(this.gameLayer.isOver == true){
+			this.gameLayer.player.unscheduleUpdate();
+			this.gameLayer.canfire = false;
+			this.unscheduleUpdate();
+		}
 		
 	},
 	createAnimationAction1: function() {
@@ -42,6 +48,11 @@ var Enemy = cc.Sprite.extend({
 	},moveDown: function(){
 		var pos = this.getPosition();
 		this.setPosition(pos.x , pos.y - 2);
+	},
+	closeTo: function(pPos){
+		var myPos = this.getPosition();
+		if(( Math.abs(myPos.x - pPos.x) <= 30 ) && (Math.abs(myPos.y - pPos.y) <= 20 ))
+			this.gameLayer.isOver = true ;
 	}
 	
 });
