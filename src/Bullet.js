@@ -18,10 +18,13 @@ var Bullet = cc.Sprite.extend({
 		}else if(this.direction == Bullet.Dir.RIGHT){
 			this.fireRight();
 		}
+		this.outOfFrame();
+		
 	},
 	fireRight: function(){
 		var pos = this.getPosition();
 		this.setPosition(new cc.Point(pos.x + this.speed , pos.y));
+		
 	},
 	fireLeft: function() {
 		var pos = this.getPosition();
@@ -35,6 +38,17 @@ var Bullet = cc.Sprite.extend({
 		var pos = this.getPosition();
 		this.setPosition(new cc.Point(pos.x , pos.y - this.speed));
 	},
+	removeBullet: function(){
+		this.gameLayer.removeChild(this);
+	},
+	outOfFrame: function(){
+		var pos = this.getPosition();
+		if(pos.x < 50 || pos.x > screenWidth - 50)
+			this.removeBullet();
+		if(pos.y < 50 || pos.y > screenHeight - 50)
+			this.removeBullet();
+	}
+	
 });
 
 var Velocity = 5.2;
