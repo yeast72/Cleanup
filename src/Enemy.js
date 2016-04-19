@@ -59,6 +59,12 @@ var Enemy = cc.Sprite.extend({
 		this.gameLayer.enemy.unscheduleUpdate();
 		this.gameLayer.removeChild(this);
 		this.dead = true;
+		this.gameLayer.createEnemy(this.gameLayer);
+	},
+	randomPosition: function(){
+		var numRandom = Math.random*4
+		if(numRandom == 1)
+			this.setPosition()
 	}
 	
 });

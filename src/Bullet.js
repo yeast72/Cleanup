@@ -48,9 +48,9 @@ var Bullet = cc.Sprite.extend({
 	},
 	outOfFrame: function(){
 		var pos = this.getPosition();
-		if(pos.x < 50 || pos.x > screenWidth - 50)
+		if(pos.x < 60 || pos.x > screenWidth - 60)
 			this.removeBullet();
-		if(pos.y < 50 || pos.y > screenHeight - 50)
+		if(pos.y < 60 || pos.y > screenHeight - 60)
 			this.removeBullet();
 	},
 	closeToEnemy: function(ePos){
