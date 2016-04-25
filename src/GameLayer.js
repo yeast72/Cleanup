@@ -13,6 +13,8 @@ var GameLayer = cc.LayerColor.extend({
 	this.arrEnemy = [];
 	this.timeEnemySpawn = 180;
 	this.timeEnemy = 0;
+	this.timeDelayGun = 36;
+	this.timeGun = 0;
 	this.createEnemy();
 	this.isOver = false;
 	this.canfire = true;
@@ -25,16 +27,22 @@ var GameLayer = cc.LayerColor.extend({
 			this.player.scheduleUpdate();
 		}
 		this.timeEnemy++;
+		this.timeGun++;
 		if(this.timeEnemy > this.timeEnemySpawn){
 			this.createEnemy();
 			this.timeEnemy = 0;
-			if(this.timeEnemySpawn > 30)
-			this.timeEnemySpawn = this.timeEnemySpawn/1.1;
+			if(this.timeEnemySpawn > 60)
+			this.timeEnemySpawn = this.timeEnemySpawn -30;
+		}
+		if(this.timeGun > this.timeDelayGun){
+			this.canfire = true;
+			this.timeGun = 0;
 		}
 		this.checkBulletToEnemy()
 		for(var i = 0 ; i < this.arrBullet.length ; i++) {
 			this.removeBulletOutOfBound(this.arrBullet[i] , i);
 		}
+		
 		
 	},
     addKeyboardHandlers: function() {
@@ -82,12 +90,16 @@ var GameLayer = cc.LayerColor.extend({
     },
 	
 	createEnemy : function(){
-		this.enemy = new Enemy(this);
-		this.enemy.randomPosition();
-		this.enemy.runAction(this.enemy.moveAction);
-		this.addChild(this.enemy);
-		this.arrEnemy.push(this.enemy);
-		this.enemy.scheduleUpdate();
+		var random = 1 + Math.floor(Math.random() * 2);
+		for(var i = 0 ; i < random ; i++){
+			this.enemy = new Enemy(this);
+			this.enemy.randomPosition();
+			this.enemy.runAction(this.enemy.moveAction);
+			this.addChild(this.enemy);
+			this.arrEnemy.push(this.enemy);
+			this.enemy.scheduleUpdate();
+		}
+		
 	},
 	fire : function(direction){
 		if(this.canfire){
@@ -95,12 +107,9 @@ var GameLayer = cc.LayerColor.extend({
 			this.addChild(this.bullet);
 			this.arrBullet.push(this.bullet);
 			this.bullet.scheduleUpdate();
+			this.canfire = false;
 		}
 		
-	},
-	canFireBullet : function(){
-		this.canfire = true;
-		console.log(this.canfire);
 	},
 	checkBulletToEnemy : function() {
 		if(this.arrBullet != null && this.arrEnemy != null){
