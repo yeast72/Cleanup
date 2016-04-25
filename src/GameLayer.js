@@ -28,6 +28,9 @@ var GameLayer = cc.LayerColor.extend({
 			this.time = 0;
 		}
 		this.checkBulletToEnemy()
+		for(var i = 0 ; i < this.arrBullet.length ; i++) {
+			this.removeBulletOutOfBound(this.arrBullet[i] , i);
+		}
 		
 	},
     addKeyboardHandlers: function() {
@@ -117,7 +120,15 @@ var GameLayer = cc.LayerColor.extend({
 			var distanceY = Math.abs(obj1Pos.y - obj2Pos.y);
 			return(distanceX < 10 && distanceY < 10);
 		}
-	}
+	},
+	removeBulletOutOfBound : function(bullet , i){
+			var pos = bullet.getPosition();
+		if( pos.x < 50 || pos.x > screenWidth - 50 || pos.y < 50 || pos.y > screenHeight - 50) {
+			this.removeChild(this.arrBullet[i]);
+			this.arrBullet.splice(i,1);
+		}
+		},
+	
 	
 	
 
