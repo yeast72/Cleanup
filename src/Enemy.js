@@ -13,7 +13,6 @@ var Enemy = cc.Sprite.extend({
 		this.closeTo(pPos);
 		if(this.gameLayer.isOver == true){
 			this.gameLayer.player.unscheduleUpdate();
-			this.gameLayer.canfire = false;
 			this.unscheduleUpdate();
 		}
 		
@@ -54,11 +53,6 @@ var Enemy = cc.Sprite.extend({
 		var myPos = this.getPosition();
 		if(( Math.abs(myPos.x - pPos.x) <= 30 ) && (Math.abs(myPos.y - pPos.y) <= 20 ))
 			this.gameLayer.isOver = true ;
-	},
-	die: function(){
-		this.gameLayer.enemy.unscheduleUpdate();
-		this.gameLayer.removeChild(this);
-		this.dead = true;
 	},
 	randomPosition: function(){
 		var numRandom = 1 + Math.floor( Math.random()*4);

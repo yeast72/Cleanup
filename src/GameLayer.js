@@ -23,10 +23,11 @@ var GameLayer = cc.LayerColor.extend({
 			this.player.scheduleUpdate();
 		}
 		this.time++;
-		if(this.time > 600){
+		if(this.time > 180){
 			this.createEnemy();
 			this.time = 0;
 		}
+		this.checkBulletToEnemy()
 		
 	},
     addKeyboardHandlers: function() {
@@ -89,10 +90,36 @@ var GameLayer = cc.LayerColor.extend({
 			this.bullet.scheduleUpdate();
 		}
 		
-	},canFireBullet : function(){
+	},
+	canFireBullet : function(){
 		this.canfire = true;
 		console.log(this.canfire);
+	},
+	checkBulletToEnemy : function() {
+		if(this.arrBullet != null && this.arrEnemy != null){
+			for( var i = 0 ; i < this.arrEnemy.length ; i++){
+				for( var j = 0 ; j < this.arrBullet.length ; j++){
+					if(this.isIntersect(this.arrEnemy[i] , 		this.arrBullet[j])){
+						this.removeChild(this.arrBullet[j]);
+						this.arrBullet.splice(j,1);
+						this.removeChild(this.arrEnemy[i]);
+						this.arrEnemy.splice(i,1);
+					}	
+				}
+			}
+		}
+	},
+	isIntersect : function (obj1 , obj2) {
+		if(obj1 != null && obj2 != null) {
+			var obj1Pos = obj1.getPosition();
+			var obj2Pos = obj2.getPosition();
+			var distanceX = Math.abs(obj1Pos.x - obj2Pos.x);
+			var distanceY = Math.abs(obj1Pos.y - obj2Pos.y);
+			return(distanceX < 10 && distanceY < 10);
+		}
 	}
+	
+	
 
 });
 
