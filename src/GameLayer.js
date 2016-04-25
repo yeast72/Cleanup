@@ -11,10 +11,12 @@ var GameLayer = cc.LayerColor.extend({
 	this.scheduleUpdate();
 	this.arrBullet = [];
 	this.arrEnemy = [];
+	this.timeEnemySpawn = 180;
+	this.timeEnemy = 0;
 	this.createEnemy();
 	this.isOver = false;
 	this.canfire = true;
-	this.time = 0;
+	
     return true;
   },
 	update: function(){
@@ -22,10 +24,12 @@ var GameLayer = cc.LayerColor.extend({
 			var pos = this.player.getPosition();
 			this.player.scheduleUpdate();
 		}
-		this.time++;
-		if(this.time > 180){
+		this.timeEnemy++;
+		if(this.timeEnemy > this.timeEnemySpawn){
 			this.createEnemy();
-			this.time = 0;
+			this.timeEnemy = 0;
+			if(this.timeEnemySpawn > 30)
+			this.timeEnemySpawn = this.timeEnemySpawn/1.1;
 		}
 		this.checkBulletToEnemy()
 		for(var i = 0 ; i < this.arrBullet.length ; i++) {
