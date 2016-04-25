@@ -9,15 +9,23 @@ var GameLayer = cc.LayerColor.extend({
 	this.addChild(this.player);
     this.addKeyboardHandlers();
 	this.scheduleUpdate();
+	this.arrBullet = [];
+	this.arrEnemy = [];
 	this.createEnemy();
-	this.canfire = true;
 	this.isOver = false;
+	this.canfire = true;
+	this.time = 0;
     return true;
   },
 	update: function(){
 		if(!this.isOver){
 			var pos = this.player.getPosition();
 			this.player.scheduleUpdate();
+		}
+		this.time++;
+		if(this.time > 600){
+			this.createEnemy();
+			this.time = 0;
 		}
 		
 	},
@@ -66,17 +74,18 @@ var GameLayer = cc.LayerColor.extend({
     },
 	
 	createEnemy : function(){
-		//this.enemy = new Array();
 		this.enemy = new Enemy(this);
-		this.enemy.setPosition(new cc.Point(0,300));
+		this.enemy.randomPosition();
 		this.enemy.runAction(this.enemy.moveAction);
 		this.addChild(this.enemy);
+		this.arrEnemy.push(this.enemy);
 		this.enemy.scheduleUpdate();
 	},
 	fire : function(direction){
 		if(this.canfire){
 			this.bullet = new Bullet(this,direction);
 			this.addChild(this.bullet);
+			this.arrBullet.push(this.bullet);
 			this.bullet.scheduleUpdate();
 		}
 		
