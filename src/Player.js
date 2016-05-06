@@ -69,10 +69,10 @@ var Player = cc.Sprite.extend({
 });
 
 
-Player.MOVE_RIGHT = 3.5;
-Player.MOVE_LEFT = -3.5 ;
-Player.MOVE_UP = 3.5;
-Player.MOVE_DOWN = -3.5;
+Player.MOVE_RIGHT = 3.75;
+Player.MOVE_LEFT = -3.75 ;
+Player.MOVE_UP = 3.75;
+Player.MOVE_DOWN = -3.75;
 Player.DIR = {
 	UP:1,
 	DOWN: 2,

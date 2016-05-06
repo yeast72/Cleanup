@@ -13,7 +13,7 @@ var GameLayer = cc.LayerColor.extend({
 	this.arrEnemy = [];
 	this.timeEnemySpawn = 180;
 	this.timeEnemy = 0;
-	this.timeDelayGun = 36;
+	this.timeDelayGun = 30;
 	this.timeGun = 0;
 	this.createEnemy();
 	this.isOver = false;
@@ -42,6 +42,7 @@ var GameLayer = cc.LayerColor.extend({
 		for(var i = 0 ; i < this.arrBullet.length ; i++) {
 			this.removeBulletOutOfBound(this.arrBullet[i] , i);
 		}
+		this.checkAdjacentEnemy();
 		
 		
 	},
@@ -131,7 +132,7 @@ var GameLayer = cc.LayerColor.extend({
 			var obj2Pos = obj2.getPosition();
 			var distanceX = Math.abs(obj1Pos.x - obj2Pos.x);
 			var distanceY = Math.abs(obj1Pos.y - obj2Pos.y);
-			return(distanceX < 10 && distanceY < 10);
+			return(distanceX < 35 && distanceY < 35);
 		}
 	},
 	removeBulletOutOfBound : function(bullet , i){
@@ -141,6 +142,37 @@ var GameLayer = cc.LayerColor.extend({
 			this.arrBullet.splice(i,1);
 		}
 		},
+	
+	checkAdjacentEnemy : function(){
+		for(var i = 0 ; i < this.arrEnemy.length ; i++){
+			for(var j = 0 ; j < this.arrEnemy.length ; j++){
+				if(this.isIntersect(this.arrEnemy[i],this.arrEnemy[j])){
+					this.checkDirection(this.arrEnemy[i],this.arrEnemy[j]);
+				}
+					
+			}
+		}
+	},
+	
+	checkDirection : function(obj1,obj2) {
+		if(obj1 != null && obj2 != null) {
+			var obj1Pos = obj1.getPosition();
+			var obj2Pos = obj2.getPosition();
+			if(obj1Pos.x > obj2Pos.x){
+				obj2.moveLeft();
+			}
+			if(obj1Pos.x < obj2Pos.x){
+				obj2.moveRight();
+			}
+			if(obj1Pos.y > obj2Pos.y){
+				obj2.moveDown();
+			}
+			if(obj1Pos.y < obj2Pos.y){
+				obj2.moveUp();
+			}
+		}
+	},
+	
 	
 	
 	

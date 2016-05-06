@@ -38,16 +38,16 @@ var Enemy = cc.Sprite.extend({
 		
 	},moveRight: function() {
 		var pos = this.getPosition();
-		this.setPosition(pos.x + 2 , pos.y);
+		this.setPosition(pos.x + Enemy.Velocity , pos.y);
 	},moveLeft: function() {
 		var pos = this.getPosition();
-		this.setPosition(pos.x - 2 , pos.y);
+		this.setPosition(pos.x - Enemy.Velocity , pos.y);
 	},moveUp: function() {
 		var pos = this.getPosition();
-		this.setPosition(pos.x , pos.y + 2);
+		this.setPosition(pos.x , pos.y + Enemy.Velocity);
 	},moveDown: function(){
 		var pos = this.getPosition();
-		this.setPosition(pos.x , pos.y - 2);
+		this.setPosition(pos.x , pos.y - Enemy.Velocity);
 	},
 	closeTo: function(pPos){
 		var myPos = this.getPosition();
@@ -86,4 +86,4 @@ var Enemy = cc.Sprite.extend({
 	
 });
 
-Enemy.Velocity = 2;
+Enemy.Velocity = 1.2;
