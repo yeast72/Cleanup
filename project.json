@@ -19,6 +19,7 @@
 		"src/Bg.js",
 		"src/Bullet.js",
 		"src/GameOver.js",
-		"src/BulletPlus.js"
+		"src/BulletPlus.js",
+		"src/GameStart.js"
     ]
 }

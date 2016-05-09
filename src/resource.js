@@ -5,6 +5,7 @@ var res = { bg_png : 'res/images/Bg.png',
 		   player_right: 'res/images/PlayerRight.png',
 		   gameover_png : 'res/images/gameover.png',
 		   item_bullet: 'res/images/bulletPlus.png',
+		   startscece_png :'res/images/StartGame.png',
 };
 
 var g_resources = [];

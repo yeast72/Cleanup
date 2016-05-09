@@ -43,7 +43,7 @@ var GameOver = cc.Sprite.extend( {
 	
 });
 
-var GameScene = cc.Scene.extend ({
+var GameOverScene = cc.Scene.extend ({
 	onEnter : function() {
 		this._super();
 		var layer = new GameOver();

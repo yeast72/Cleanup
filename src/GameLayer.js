@@ -9,22 +9,23 @@ var GameLayer = cc.LayerColor.extend({
 	  this.addChild(this.player);
 	  this.addKeyboardHandlers();
 	  this.scheduleUpdate();
+	  this.currentBullet = 7;
 	  this.arrBullet = [];
 	  this.arrEnemy = [];
 	  this.timeEnemySpawn = 180;
 	  this.timeEnemy = 0;
-	  this.timeDelayGun = 30;
+	  this.timeDelayGun = 15;
 	  this.timeGun = 0;
 	  this.timeItemBullet = 0;
 	  this.createEnemy();
 	  this.isOver = false;
 	  this.canfire = true;
-	  this.scoreLabel = cc.LabelTTF.create( '0' , 'Score' , 40);
-	  this.scoreLabel.setPosition(new cc.Point(screenWidth - 50 , screenHeight - 40 ));
+	  this.textAmmo = cc.LabelTTF.create('Ammo : ' + this.currentBullet , 'bullet' , 40);
+	  this.textAmmo.setPosition(new cc.Point(blockBg + 50, screenHeight - blockBg));
+	  this.addChild(this.textAmmo);
+	  this.scoreLabel = cc.LabelTTF.create( 'Score : ' + score, 'Score' , 40);
+	  this.scoreLabel.setPosition(new cc.Point(screenWidth - 100 , screenHeight - 40 ));
 	  this.addChild(this.scoreLabel);
-	  this.textScoreLabel = cc.LabelTTF.create( 'Score :  ' , 'StringScore' , 40);
-	  this.textScoreLabel.setPosition(new cc.Point(screenWidth - 125 , screenHeight - 40 ));
-	  this.addChild(this.textScoreLabel);
 	  return true;
 	  
   },
@@ -34,13 +35,11 @@ var GameLayer = cc.LayerColor.extend({
 			var pos = this.player.getPosition();
 			this.player.scheduleUpdate();
 		}
-		this.timeEnemy++;
-		this.timeGun++;
-		this.timeItemBullet++;
+		this.updateTime();
 		if(this.timeEnemy > this.timeEnemySpawn){
 			this.createEnemy();
 			this.timeEnemy = 0;
-			if(this.timeEnemySpawn > 60)
+			if(this.timeEnemySpawn > 45)
 			this.timeEnemySpawn = this.timeEnemySpawn -30;
 		}
 		if(this.timeGun > this.timeDelayGun){
@@ -54,6 +53,8 @@ var GameLayer = cc.LayerColor.extend({
 		this.checkAdjacentEnemy();
 		this.gameOver();
 		this.itemBulletSpawn();
+		this.loseItemBullet();
+		this.checkGetBullet();
 		
 	},
 	
@@ -103,24 +104,25 @@ var GameLayer = cc.LayerColor.extend({
     },
 	
 	createEnemy : function(){
-		var random = 1 + Math.floor(Math.random() * 2);
-		for(var i = 0 ; i < random ; i++){
-			this.enemy = new Enemy(this);
-			this.enemy.randomPosition();
-			this.enemy.runAction(this.enemy.moveAction);
-			this.addChild(this.enemy);
-			this.arrEnemy.push(this.enemy);
-			this.enemy.scheduleUpdate();
-		}
+		this.enemy = new Enemy(this);
+		this.enemy.randomPosition();
+		this.enemy.runAction(this.enemy.moveAction);
+		this.addChild(this.enemy);
+		this.arrEnemy.push(this.enemy);
+		this.enemy.scheduleUpdate();
 		
 	},
 	fire : function(direction){
-		if(this.canfire){
-			this.bullet = new Bullet(this,direction);
-			this.addChild(this.bullet);
-			this.arrBullet.push(this.bullet);
-			this.bullet.scheduleUpdate();
-			this.canfire = false;
+		if(this.currentBullet > 0) {
+			if(this.canfire) {
+				this.bullet = new Bullet(this,direction);
+				this.addChild(this.bullet);
+				this.arrBullet.push(this.bullet);
+				this.bullet.scheduleUpdate();
+				this.canfire = false;
+				this.currentBullet -= 1;
+				this.textAmmo.setString('Ammo : ' + this.currentBullet );
+			}
 		}
 	},
 	checkBulletToEnemy : function() {
@@ -138,10 +140,15 @@ var GameLayer = cc.LayerColor.extend({
 			}
 		}
 	},
-	
+	updateTime : function() {
+		this.timeEnemy++;
+		this.timeGun++;
+		this.timeItemBullet++;
+	},
+									 
 	addScore : function(scoreAdd) {
 		score += scoreAdd;
-		this.scoreLabel.setString(score);
+		this.scoreLabel.setString('Score : '+ score);
 	},
 	
 	isIntersect : function (obj1 , obj2) {
@@ -193,7 +200,7 @@ var GameLayer = cc.LayerColor.extend({
 	
 	gameOver : function() {
 		if(this.isOver)
-			cc.director.runScene(new GameScene());
+			cc.director.runScene(new GameOverScene());
 	},
 	
 	itemBulletSpawn : function() {
@@ -206,13 +213,23 @@ var GameLayer = cc.LayerColor.extend({
 	},
 	
 	checkGetBullet : function() {
-		
-	}
+		if(this.isIntersect(this.player,this.itemBullet)){
+			this.removeChild(this.itemBullet);
+			this.itemBullet = null;
+			this.currentBullet += 8;
+			this.textAmmo.setString('Ammo : ' + this.currentBullet );
+		}
+	},
 	
+	loseItemBullet : function() {
+		if(this.itemBullet != null){
+			if(this.timeItemBullet > 240 ){
+				this.removeChild(this.itemBullet);
+				this.itemBullet = null;
+			}
+		}
+	},
 	
-	
-	
-
 });
 
 var StartScene = cc.Scene.extend ({
