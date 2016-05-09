@@ -76,6 +76,8 @@ var GameLayer = cc.LayerColor.extend({
 				this.fire(3);
 		}else if( keyCode == cc.KEY.right){
 				this.fire(4);
+		}else if( keyCode == cc.KEY.r){
+				cc.director.runScene( new StartScene());
 		}
     },
     onKeyUp: function( keyCode, event ) {
