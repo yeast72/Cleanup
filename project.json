@@ -17,6 +17,7 @@
 		"src/Player.js",
 		"src/Enemy.js",
 		"src/Bg.js",
-		"src/Bullet.js"
+		"src/Bullet.js",
+		"src/GameOver.js"
     ]
 }

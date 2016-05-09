@@ -24,6 +24,7 @@ var Enemy = cc.Sprite.extend({
         animation.setDelayPerUnit( 0.2 );
         return cc.RepeatForever.create( cc.Animate.create( animation ));
     },
+	
 	directionToPlayer: function(pPos){
 		var pos = this.getPosition();
 		if(pos.x < pPos.x){
@@ -36,25 +37,31 @@ var Enemy = cc.Sprite.extend({
 			this.moveUp();
 		}
 		
-	},moveRight: function() {
+	},
+	moveRight: function() {
 		var pos = this.getPosition();
 		this.setPosition(pos.x + Enemy.Velocity , pos.y);
-	},moveLeft: function() {
+	},
+	moveLeft: function() {
 		var pos = this.getPosition();
 		this.setPosition(pos.x - Enemy.Velocity , pos.y);
-	},moveUp: function() {
+	},
+	moveUp: function() {
 		var pos = this.getPosition();
 		this.setPosition(pos.x , pos.y + Enemy.Velocity);
-	},moveDown: function(){
+	},
+	moveDown: function() {
 		var pos = this.getPosition();
 		this.setPosition(pos.x , pos.y - Enemy.Velocity);
 	},
-	closeTo: function(pPos){
+	
+	closeTo: function(pPos) {
 		var myPos = this.getPosition();
 		if(( Math.abs(myPos.x - pPos.x) <= 30 ) && (Math.abs(myPos.y - pPos.y) <= 20 ))
 			this.gameLayer.isOver = true ;
 	},
-	randomPosition: function(){
+	
+	randomPosition: function() {
 		var numRandom = 1 + Math.floor( Math.random()*4);
 		var numRandom2 = 1 +Math.floor( Math.random()*2);
 		if(numRandom == 1){
@@ -63,19 +70,19 @@ var Enemy = cc.Sprite.extend({
 			else
 				this.setPosition(cc.p(screenWidth/2 - 10 ,screenHeight));
 		}
-		else if(numRandom == 2){
+		else if(numRandom == 2) {
 			if(numRandom2 == 1)
 				this.setPosition( cc.p(screenWidth/2 + 10, 0 ));
 			else
 				this.setPosition( cc.p(screenWidth/2 - 10, 0 ));
 		}
-		else if(numRandom == 3){
+		else if(numRandom == 3) {
 			if(numRandom2 == 1)
 				this.setPosition(cc.p(0 , screenHeight /2 + 10));
 			else
 				this.setPosition(cc.p(0 , screenHeight /2 - 10));
 		}
-		else if(numRandom == 4){
+		else if(numRandom == 4) {
 			if(numRandom2 == 1)
 				this.setPosition( cc.p(screenWidth , screenHeight / 2 + 10));
 			else

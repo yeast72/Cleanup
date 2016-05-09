@@ -21,6 +21,7 @@ var GameLayer = cc.LayerColor.extend({
 	
     return true;
   },
+	
 	update: function(){
 		if(!this.isOver){
 			var pos = this.player.getPosition();
@@ -43,9 +44,11 @@ var GameLayer = cc.LayerColor.extend({
 			this.removeBulletOutOfBound(this.arrBullet[i] , i);
 		}
 		this.checkAdjacentEnemy();
+		this.gameOver();
 		
 		
 	},
+	
     addKeyboardHandlers: function() {
         var self = this;
         cc.eventManager.addListener({
@@ -76,10 +79,9 @@ var GameLayer = cc.LayerColor.extend({
 				this.fire(3);
 		}else if( keyCode == cc.KEY.right){
 				this.fire(4);
-		}else if( keyCode == cc.KEY.r){
-				cc.director.runScene( new StartScene());
 		}
     },
+	
     onKeyUp: function( keyCode, event ) {
       if( keyCode == cc.KEY.d){
 		  this.player.switchDirectionRelease(4);
@@ -112,7 +114,6 @@ var GameLayer = cc.LayerColor.extend({
 			this.bullet.scheduleUpdate();
 			this.canfire = false;
 		}
-		
 	},
 	checkBulletToEnemy : function() {
 		if(this.arrBullet != null && this.arrEnemy != null){
@@ -175,8 +176,10 @@ var GameLayer = cc.LayerColor.extend({
 		}
 	},
 	
-	
-	
+	gameOver : function() {
+		if(this.isOver)
+			cc.director.runScene(new GameScene());
+	},
 	
 
 });
@@ -189,3 +192,5 @@ var StartScene = cc.Scene.extend({
     this.addChild( layer );
   }
 });
+
+var score = 0 ;
