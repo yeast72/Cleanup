@@ -15,6 +15,7 @@ var GameLayer = cc.LayerColor.extend({
 	  this.timeEnemy = 0;
 	  this.timeDelayGun = 30;
 	  this.timeGun = 0;
+	  this.timeItemBullet = 0;
 	  this.createEnemy();
 	  this.isOver = false;
 	  this.canfire = true;
@@ -35,6 +36,7 @@ var GameLayer = cc.LayerColor.extend({
 		}
 		this.timeEnemy++;
 		this.timeGun++;
+		this.timeItemBullet++;
 		if(this.timeEnemy > this.timeEnemySpawn){
 			this.createEnemy();
 			this.timeEnemy = 0;
@@ -51,7 +53,7 @@ var GameLayer = cc.LayerColor.extend({
 		}
 		this.checkAdjacentEnemy();
 		this.gameOver();
-		
+		this.itemBulletSpawn();
 		
 	},
 	
@@ -193,6 +195,20 @@ var GameLayer = cc.LayerColor.extend({
 		if(this.isOver)
 			cc.director.runScene(new GameScene());
 	},
+	
+	itemBulletSpawn : function() {
+		if(this.timeItemBullet > 300){
+			this.itemBullet = new BulletPlus(this);
+			this.itemBullet.randomPosition();
+			this.addChild(this.itemBullet);
+			this.timeItemBullet = 0;
+		}
+	},
+	
+	checkGetBullet : function() {
+		
+	}
+	
 	
 	
 	
