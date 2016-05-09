@@ -62,33 +62,23 @@ var Enemy = cc.Sprite.extend({
 	},
 	
 	randomPosition: function() {
-		var numRandom = 1 + Math.floor( Math.random()*4);
-		var numRandom2 = 1 +Math.floor( Math.random()*2);
-		if(numRandom == 1){
-			if(numRandom2 == 1)
-				this.setPosition( cc.p(screenWidth/2 + 10 ,screenHeight));
-			else
-				this.setPosition(cc.p(screenWidth/2 - 10 ,screenHeight));
-		}
-		else if(numRandom == 2) {
-			if(numRandom2 == 1)
-				this.setPosition( cc.p(screenWidth/2 + 10, 0 ));
-			else
-				this.setPosition( cc.p(screenWidth/2 - 10, 0 ));
-		}
-		else if(numRandom == 3) {
-			if(numRandom2 == 1)
-				this.setPosition(cc.p(0 , screenHeight /2 + 10));
-			else
-				this.setPosition(cc.p(0 , screenHeight /2 - 10));
-		}
-		else if(numRandom == 4) {
-			if(numRandom2 == 1)
-				this.setPosition( cc.p(screenWidth , screenHeight / 2 + 10));
-			else
-				this.setPosition( cc.p(screenWidth , screenHeight / 2 - 10));
-		}
-		
+		var numRandom = 1 + Math.floor( Math.random() * 8 );
+		if(numRandom == 1)
+			this.setPosition( cc.p(screenWidth / 2 + 10 ,screenHeight));
+		else if(numRandom == 2)
+			this.setPosition( cc.p(screenWidth / 2 - 10 ,screenHeight));
+		else if(numRandom == 3)
+			this.setPosition( cc.p(screenWidth / 2 + 10, 0 ));
+		else if(numRandom == 4)
+			this.setPosition( cc.p(screenWidth / 2 - 10, 0 ));
+		else if(numRandom == 5)
+			this.setPosition(cc.p(0 , screenHeight / 2 + 10));
+		else if(numRandom == 6) 
+			this.setPosition(cc.p(0 , screenHeight / 2 - 10));
+		else if(numRandom == 7)
+			this.setPosition( cc.p(screenWidth , screenHeight / 2 - 10));
+		else if(numRandom == 8)
+			this.setPosition( cc.p(screenWidth , screenHeight / 2 + 10));
 	}
 	
 });

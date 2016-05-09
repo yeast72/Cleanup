@@ -1,25 +1,31 @@
 
 var GameLayer = cc.LayerColor.extend({
   init: function() {
-   	this.background = new Bg();
-	this.addChild(this.background);
-	this.background.setPosition(new cc.Point(400,300));
-	this.player= new Player();
-	this.player.setPosition(new cc.Point(400,300));
-	this.addChild(this.player);
-    this.addKeyboardHandlers();
-	this.scheduleUpdate();
-	this.arrBullet = [];
-	this.arrEnemy = [];
-	this.timeEnemySpawn = 180;
-	this.timeEnemy = 0;
-	this.timeDelayGun = 30;
-	this.timeGun = 0;
-	this.createEnemy();
-	this.isOver = false;
-	this.canfire = true;
-	
-    return true;
+	  this.background = new Bg();
+	  this.addChild(this.background);
+	  this.background.setPosition(new cc.Point(400,300));
+	  this.player= new Player();
+	  this.player.setPosition(new cc.Point(400,300));
+	  this.addChild(this.player);
+	  this.addKeyboardHandlers();
+	  this.scheduleUpdate();
+	  this.arrBullet = [];
+	  this.arrEnemy = [];
+	  this.timeEnemySpawn = 180;
+	  this.timeEnemy = 0;
+	  this.timeDelayGun = 30;
+	  this.timeGun = 0;
+	  this.createEnemy();
+	  this.isOver = false;
+	  this.canfire = true;
+	  this.scoreLabel = cc.LabelTTF.create( '0' , 'Score' , 40);
+	  this.scoreLabel.setPosition(new cc.Point(screenWidth - 50 , screenHeight - 40 ));
+	  this.addChild(this.scoreLabel);
+	  this.textScoreLabel = cc.LabelTTF.create( 'Score :  ' , 'StringScore' , 40);
+	  this.textScoreLabel.setPosition(new cc.Point(screenWidth - 125 , screenHeight - 40 ));
+	  this.addChild(this.textScoreLabel);
+	  return true;
+	  
   },
 	
 	update: function(){
@@ -124,11 +130,18 @@ var GameLayer = cc.LayerColor.extend({
 						this.arrBullet.splice(j,1);
 						this.removeChild(this.arrEnemy[i]);
 						this.arrEnemy.splice(i,1);
+						this.addScore(2);
 					}	
 				}
 			}
 		}
 	},
+	
+	addScore : function(scoreAdd) {
+		score += scoreAdd;
+		this.scoreLabel.setString(score);
+	},
+	
 	isIntersect : function (obj1 , obj2) {
 		if(obj1 != null && obj2 != null) {
 			var obj1Pos = obj1.getPosition();
@@ -143,8 +156,8 @@ var GameLayer = cc.LayerColor.extend({
 		if( pos.x < 50 || pos.x > screenWidth - 50 || pos.y < 50 || pos.y > screenHeight - 50) {
 			this.removeChild(this.arrBullet[i]);
 			this.arrBullet.splice(i,1);
-		}
-		},
+			}
+	},
 	
 	checkAdjacentEnemy : function(){
 		for(var i = 0 ; i < this.arrEnemy.length ; i++){
@@ -181,10 +194,12 @@ var GameLayer = cc.LayerColor.extend({
 			cc.director.runScene(new GameScene());
 	},
 	
+	
+	
 
 });
 
-var StartScene = cc.Scene.extend({
+var StartScene = cc.Scene.extend ({
   onEnter: function() {
     this._super();
     var layer = new GameLayer();
