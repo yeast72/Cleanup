@@ -1,12 +1,8 @@
 var GameOver = cc.Sprite.extend( {
-	
 	init : function() {
 		this._super();
-		var animate = new cc.Animation.create();	animate.addSpriteFrameWithFile('res/images/gameover.png');	animate.addSpriteFrameWithFile('res/images/gameover.png');
-		animate.setDelayPerUnit(1.0);
-		var movingBackground = cc.RepeatForever.create(cc.Animate.create(animate));
-		this.runAction(movingBackground);
-		this.setPosition(new cc.Point(screenWidth /2 , screenHeight / 2));
+		this.initWithFile('res/images/gameOver3.png');
+		this.setPosition(new cc.Point(screenWidth / 2,screenHeight / 2));
 		this.addKeyboardHandlers();
 		this.scoreLabel = cc.LabelTTF.create( '0' , 'Score' , 40);
 		this.scoreLabel.setPosition(new cc.Point(screenWidth / 2 , screenHeight / 2  - 100));
