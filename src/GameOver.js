@@ -5,12 +5,9 @@ var GameOver = cc.Sprite.extend( {
 		this.setPosition(new cc.Point(screenWidth / 2,screenHeight / 2));
 		this.addKeyboardHandlers();
 		this.scoreLabel = cc.LabelTTF.create( '0' , 'Score' , 40);
-		this.scoreLabel.setPosition(new cc.Point(screenWidth / 2 , screenHeight / 2  - 100));
+		this.scoreLabel.setPosition(new cc.Point(screenWidth / 2 +50, screenHeight / 2  - 150));
 		this.scoreLabel.setString(score);
 	  	this.addChild(this.scoreLabel);
-		 this.textScoreLabel = cc.LabelTTF.create( 'Score :  ' , 'StringScore' , 40);
-		this.textScoreLabel.setPosition(new cc.Point(screenWidth / 2 - 75 , screenHeight / 2 - 100 ));
-	  	this.addChild(this.textScoreLabel);
 	},
 	
 	addKeyboardHandlers : function() {
